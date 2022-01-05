@@ -168,7 +168,7 @@
           console.log('opcje', optionId, option);
 
           //check if there is param with name paramId in formData
-          if(formData[paramId]) && (formData[paramId].includes(optionId)) {
+          if(formData[paramId] && formData[paramId].includes(optionId)) {
 
             //check if the option is not default
             if(!option.default == true){
