@@ -171,15 +171,15 @@
           if(formData[paramId] && formData[paramId].includes(optionId)) {
 
             //check if the option is not default
-            if(!option.default == true){
+            if(!option.default == true){  //(!option.default)
 
               // add option price to variable
               price += option.price;
             }
 
-           // check if the option is default
+            // check if the option is default
 
-          } else if(option.default == false){
+          } else if(option.default == true){  //(option.default)
 
             //reduce option price to variable
             price -= option.price;
