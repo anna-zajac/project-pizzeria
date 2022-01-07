@@ -167,8 +167,10 @@
           const option = param.options[optionId];
           console.log('opcje', optionId, option);
 
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+
           //check if there is param with name paramId in formData
-          if(formData[paramId] && formData[paramId].includes(optionId)) {
+          if(optionSelected) {
 
             //check if the option is not default
             if(!option.default == true){  //(!option.default)
@@ -186,11 +188,19 @@
 
           }
 
+          // find image 'category-option'
           const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
 
+          // check if there is an image
           if(optionImage){
-            if(formData[paramId] && formData[paramId].includes(optionId)){
+
+            // check if the option is selected
+            if(optionSelected){
+
+              // if yes add class active (image)
               optionImage.classList.add(classNames.menuProduct.imageVisible);
+
+              // if not remove class active (image)
             } else {
               optionImage.classList.remove(classNames.menuProduct.imageVisible);
             }
