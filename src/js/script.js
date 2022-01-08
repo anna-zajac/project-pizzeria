@@ -253,6 +253,7 @@
 
       if(thisWidget.value !== newValue && isNaN(newValue) && newValue > settings.amountWidget.defaultMin && newValue < settings.amountWidget.defaultMax){
         thisWidget.value = newValue;
+        thisWidget.announce();
       }
 
       thisWidget.value = newValue;
@@ -275,6 +276,13 @@
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1);
       });
+    }
+
+    announce(){
+      const thisWidget = this;
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
+      
     }
   }
 
