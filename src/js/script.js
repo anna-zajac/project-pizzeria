@@ -161,13 +161,13 @@
       for(let paramId in thisProduct.data.params) {
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
-        console.log('kategorie', paramId, param);
+        //console.log('kategorie', paramId, param);
     
         // for every option in this category
         for(let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          console.log('opcje', optionId, option);
+          //console.log('opcje', optionId, option);
 
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
 
@@ -226,6 +226,7 @@
       const thisWidget = this;
 
       thisWidget.getElements(element);
+      thisWidget.setValue(thisWidget.input.value);
 
       console.log('AmountWidget', thisWidget);
       console.log('constructor arguments:', element);
@@ -242,6 +243,23 @@
 
     }
 
+    setValue(value){
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+
+      /* TO DO: Add Validation*/
+
+      if(thisWidget.value !== newValue && isNaN(newValue)){
+        thisWidget.value = newValue;
+      }
+
+      thisWidget.value = newValue;
+      thisWidget.input.value = thisWidget.value;
+
+      
+
+    }
   }
 
   const app = {
