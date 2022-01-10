@@ -33,7 +33,7 @@
       },
     },
 
-     // CODE ADDED START
+    // CODE ADDED START
     cart: {
       productList: '.cart__order-summary',
       toggleTrigger: '.cart__summary',
@@ -55,14 +55,13 @@
   // CODE ADDED END
   };
 
-
   const classNames = {
     menuProduct: {
       wrapperActive: 'active',
       imageVisible: 'active',
     },
 
-     // CODE ADDED START
+    // CODE ADDED START
     cart: {
       wrapperActive: 'active',
     },
@@ -84,9 +83,9 @@
 
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
-  //CODE ADDED START
+    //CODE ADDED START
     cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
-  // CODE ADDED END
+    // CODE ADDED END
   };
   
   class Product{
@@ -157,9 +156,7 @@
         }
         /* toggle active class on thisProduct.element */
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
-
       });
-
     }
 
     initOrderForm(){
@@ -180,6 +177,7 @@
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
 
@@ -246,6 +244,8 @@
         }
       }
 
+      thisProduct.priceSingle = price;
+
       // multiply price by amount
       price *= thisProduct.amountWidget.value;
     
@@ -261,6 +261,68 @@
         thisProduct.processOrder();
       });
     }
+
+    addToCart(){
+      const thisProduct = this;
+
+      app.cart.add(thisProduct.prepareCartProduct());
+    }
+
+    prepareCartProduct(){
+      const thisProduct = this;
+
+      const productSummary = {};
+      console.log('product Summary', productSummary);
+
+      productSummary.id = thisProduct.id;
+      productSummary.name = thisProduct.data.name;
+      productSummary.amount = thisProduct.amountWidget.value;
+      productSummary.priceSingle = thisProduct.priceSingle;
+      productSummary.price = productSummary.priceSingle * productSummary.amount;
+
+      productSummary.params = {};
+      productSummary.params = thisProduct.prepareCartProductParams();
+
+      return productSummary;
+      
+    } 
+
+    prepareCartProductParams() {
+      const thisProduct = this;
+    
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      params = {};
+    
+      // for every category (param)...
+      for(let paramId in thisProduct.data.params) {
+        const param = thisProduct.data.params[paramId];
+
+        // create category param in params const eg params = { ingredients: { name: 'Ingredients', options: {}}}
+        params[paramId] = {
+          label: param.label,
+          options: {}
+        };
+    
+        // for every option in this category
+        for(let optionId in param.options) {
+          const option = param.options[optionId];
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+
+          if(optionSelected) {
+
+            params[paramId].options[optionId] = option.label;
+
+          }
+
+        }
+      }
+
+     return params;
+    }
+
+
+  
+
   }
 
   class AmountWidget{
@@ -355,6 +417,12 @@
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
     }
+
+    add(menuProduct){
+      // const thisCart = this;
+
+      console.log('adding product', menuProduct);
+    }
   }
 
   const app = {
@@ -364,8 +432,7 @@
 
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
-      }
-     
+      }   
     },
 
     initData: function(){
