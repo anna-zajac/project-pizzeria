@@ -283,8 +283,7 @@
       productSummary.params = {};
       productSummary.params = thisProduct.prepareCartProductParams();
 
-      return productSummary;
-      
+      return productSummary;  
     } 
 
     prepareCartProductParams() {
@@ -313,11 +312,10 @@
             params[paramId].options[optionId] = option.label;
 
           }
-
         }
 
       }
-     return params;
+      return params;
     }
 
   }
@@ -332,7 +330,6 @@
 
       console.log('AmountWidget', thisWidget);
       console.log('constructor arguments:', element);
-
     }
 
     getElements(element){
@@ -419,7 +416,6 @@
     add(menuProduct){
       const thisCart = this;
 
-
       /* generate HTML based on template*/
       const generatedHTML = templates.cartProduct(menuProduct);
 
@@ -430,6 +426,36 @@
       thisCart.dom.productList.appendChild(generatedDOM);
 
       console.log('adding product', menuProduct);
+
+      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+      console.log('thisCartProducts', thisCart.products);
+    }
+  }
+
+  class CartProduct{
+    constructor(menuProduct, element){
+      const thisCartProduct = this;
+
+      thisCartProduct.id = menuProduct.id;
+      thisCartProduct.name = menuProduct.name;
+      thisCartProduct.amount = menuProduct.amount;
+      thisCartProduct.priceSingle = menuProduct.priceSingle;
+      thisCartProduct.price = menuProduct.price;
+      thisCartProduct.params = menuProduct.params;
+
+      thisCartProduct.getElements(element);
+      console.log('thisCartProduct', thisCartProduct);
+    }
+
+    getElements(element){
+      const thisCartProduct = this;
+
+      thisCartProduct.dom = {};
+      thisCartProduct.dom.wrapper = element;
+      thisCartProduct.dom.amount = element.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.price = element.querySelector(select.cartProduct.price);
+      thisCartProduct.dom.edit = element.querySelector(select.cartProduct.edit);
+      thisCartProduct.dom.remove = element.querySelector(select.cartProduct.remove);
     }
   }
 
