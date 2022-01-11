@@ -452,11 +452,28 @@
 
       thisCartProduct.dom = {};
       thisCartProduct.dom.wrapper = element;
-      thisCartProduct.dom.amount = element.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.amountWidget = element.querySelector(select.cartProduct.amountWidget);
       thisCartProduct.dom.price = element.querySelector(select.cartProduct.price);
       thisCartProduct.dom.edit = element.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = element.querySelector(select.cartProduct.remove);
     }
+
+    initAmountWidget(){
+
+      const thisCartProduct = this;
+
+      thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.amountWidget);
+      thisCartProduct.dom.amountWidget.addEventListener('updated', function(){
+        thisCartProduct.amount = thisCartProduct.amountWidget.value;
+        thisCartProduct.priceSingle = thisCartProduct.amount * thisCartProduct.price;
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.priceSingle;
+        
+      });
+
+
+    }
+
+  
   }
 
   const app = {
