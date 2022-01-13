@@ -375,7 +375,7 @@
 
     announce(){
       const thisWidget = this;
-      const event = new Event('updated');
+      const event = new CustomEvent('updated', { bubbles: true});
       thisWidget.element.dispatchEvent(event); 
     }
   }
@@ -413,6 +413,10 @@
 
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+
+      thisCart.dom.productList.addEventListener('updated', function(){
+        thisCart.update();
+      })
     }
 
     add(menuProduct){
@@ -443,23 +447,27 @@
       thisCart.subtotalPrice = 0;
 
       for(let cartProduct of thisCart.products){
-         thisCart.totalNumber += cartProduct.amount;
-         thisCart.subtotalPrice += cartProduct.price;
+        thisCart.totalNumber += cartProduct.amount;
+        thisCart.subtotalPrice += cartProduct.price;
       }
 
-      if(thisCart.totalNumber !== 0){
-         thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
+      if(thisCart.totalNumber == 0){
+        thisCart.deliveryFee = 0;
       }
-
+      
       thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
+      console.log('total price', thisCart.totalPrice);
+
+
+      
+
       thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
       thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
-      thisCart.dom.deliveryFee.innerHTML = thisCart.totalPrice;
+      thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
       for(let totalPrice of thisCart.dom.totalPrice){
         totalPrice.innerHTML = thisCart.totalPrice;
       }
      
-
     }
   }
 
@@ -492,14 +500,13 @@
     }
 
     initAmountWidget(){
-
       const thisCartProduct = this;
 
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
       thisCartProduct.dom.amountWidget.addEventListener('updated', function(){
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
-        thisCartProduct.priceSingle = thisCartProduct.amount * thisCartProduct.price;
-        thisCartProduct.dom.price.innerHTML = thisCartProduct.priceSingle; 
+        thisCartProduct.price = thisCartProduct.amount * thisCartProduct.priceSingle;
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.price; 
       });
 
     }
