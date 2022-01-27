@@ -1,8 +1,18 @@
 import {settings, select, classNames} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 const app = {
+  initBooking: function(){
+    const thisApp = this;
+
+    const bookingWidget = document.querySelector(select.containerOf.booking);
+    
+    thisApp.widget = new Booking(bookingWidget);
+
+  },
+
   initPages: function(){
     const thisApp = this;
 
@@ -29,14 +39,12 @@ const app = {
         event.preventDefault();
 
         // get page id from href attribute
-
         const id = clickedElement.getAttribute('href').replace('#', '');
 
         // run thisApp.activatePage with that id
         thisApp.activatePage(id);
 
         //change url hash
-
         window.location.hash = '#/' + id;
       });
 
@@ -46,9 +54,10 @@ const app = {
 
   activatePage: function(pageId){
     const thisApp = this;
-    /* add class active to matching pages, remove from non-matching */
 
+    /* add class active to matching pages, remove from non-matching */
     for(let page of thisApp.pages){
+
       /*if(page.id == pageId){
         page.classList.add(classNames.pages.active);
       } else {
@@ -126,6 +135,7 @@ const app = {
     thisApp.initPages();
     thisApp.initData();
     thisApp.initCart();
+    thisApp.initBooking();
     
   },
 };
