@@ -6,16 +6,12 @@ class BaseWidget{
     thisWidget.dom.wrapper = wrapperElement;
 
     thisWidget.correctValue = initialValue;
-
-
   }
 
   get value(){
     const thisWidget = this;
-
     return thisWidget.correctValue;
   }
-
 
   set value(value){
     const thisWidget = this;
