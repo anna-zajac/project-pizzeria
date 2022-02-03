@@ -256,7 +256,7 @@
       "starters": ["lemonWater"]
       }
      ],
-     "bookings": 
+     "bookings":[
      {
       "id": 1,
       "date": "2021-01-30",
@@ -266,5 +266,6 @@
       "ppl": 3,
       "starters": ["water"]
       }
+   ],
 
  }
