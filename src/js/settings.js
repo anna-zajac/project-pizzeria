@@ -3,12 +3,14 @@ export const select = {
     menuProduct: '#template-menu-product',
     cartProduct: '#template-cart-product',
     bookingWidget: '#template-booking-widget',
+    homePage: '#template-home-page',
   },
   containerOf: {
     menu: '#product-list',
     cart: '#cart',
     pages: '#pages',
     booking: '.booking-wrapper',
+    homePage: '.home-wrapper',
 
   },
   all: {
@@ -41,6 +43,7 @@ export const select = {
       input: 'input[type="range"]',
       output: '.output',
     },
+    carousel: '.carousel',
   },
 
   cart: {
@@ -55,12 +58,14 @@ export const select = {
     phone: '[name="phone"]',
     address: '[name="address"]',
   },
+
   cartProduct: {
     amountWidget: '.widget-amount',
     price: '.cart__product-price',
     edit: '[href="#edit"]',
     remove: '[href="#remove"]',
   },
+
   booking: {
     peopleAmount: '.people-amount',
     hoursAmount: '.hours-amount',
@@ -76,6 +81,7 @@ export const select = {
   },
   nav: {
     links: '.main-nav a',
+    homePageLinks: '.home-starter a'
   },
 // CODE ADDED END
 };
@@ -148,8 +154,8 @@ export const settings = {
 
 export const templates = {
   menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
-  //CODE ADDED START
   cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
   bookingWidget: Handlebars.compile(document.querySelector(select.templateOf.bookingWidget).innerHTML),
-  // CODE ADDED END
+  homePage: Handlebars.compile(document.querySelector(select.templateOf.homePage).innerHTML),
+
 };
