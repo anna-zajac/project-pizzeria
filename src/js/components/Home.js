@@ -7,7 +7,6 @@ class Home{
 
     thisHome.render(element);
     thisHome.initLinks();
-    thisHome.activatePage();
   }
 
   render(element){
@@ -63,13 +62,11 @@ class Home{
     }
   }
 
-  /* initWidget(){
+  /*initWidget(){
 
-  const thisHome = this;
+    const element = document.querySelector(select.widgets.carousel);
 
-  const element = document.querySelector(select.widgets.carousel);
-
-  new Flickity(element, {
+    new Flickity(element, {
 
       //options
       autoPlay: 3000,
@@ -78,7 +75,7 @@ class Home{
 
     });
 
-  } */
+  }*/
 
 }
 
